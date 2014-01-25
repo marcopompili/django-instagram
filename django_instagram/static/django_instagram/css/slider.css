@@ -1,0 +1,16 @@
+.django_instagram {
+    position: relative;
+}
+
+.django_instagram .slider {
+    position: relative;
+    margin: 0; padding: 0;
+    list-style: none
+}
+
+.django_instagram .entry {
+    position: absolute;
+    top:0; left: 50%;
+    margin-left: -153px;
+    display: none
+}

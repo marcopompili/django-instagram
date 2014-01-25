@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+include README.md
+recursive-include django_instagram/templates *
+recursive-include django_instagram/static *
+recursive-include docs *

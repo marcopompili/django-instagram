@@ -1,0 +1,26 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls admin_static admin_modify %}
+
+{% block extrastyle %}{{ block.super }}
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+{% endblock %}
+
+{% block after_related_objects %}
+<script>
+	var url = "https://api.instagram.com/oauth/authorize/?client_id={{ client_id }}&redirect_uri={{ redirect_uri }}&response_type=code";
+	var style = "top=50, left=50, width=800, height=600, status=no, menubar=no, toolbar=no scrollbars=no";
+ 
+	function django_instagram_popup() 
+	{
+  		var win = window.open(url, "{% trans 'Get Access Token' %}", style);
+  		win.focus();
+	}
+</script>
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+<div class="submit-row">
+	<button type="button" onclick="django_instagram_popup()"><i class="fa fa-instagram"></i> {% trans 'Get Access Token' %}</button>
+	<input type="submit" value="{% trans 'Save' %}" class="default" name="_save" />
+</div>
+{% endblock %}

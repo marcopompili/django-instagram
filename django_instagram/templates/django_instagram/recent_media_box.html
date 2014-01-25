@@ -1,0 +1,18 @@
+{% load staticfiles instagram_client %}
+
+{% if recent_media %}
+    <div class="django_instagram">
+        <ul class="slider">
+            {% for media in recent_media %}
+            <li class="entry">
+                <a href="{{ media.link }}" title="{{ media.caption.text }}" target="_blank">
+                    <img src="{{ media|low_resolution }}"/>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<link href="{% static 'django_instagram/css/slider.css' %}" rel="stylesheet" type="text/css"/>
+<script src="{% static 'django_instagram/js/slider.js' %}"></script>

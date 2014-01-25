@@ -1,0 +1,25 @@
+{% load staticfiles instagram_client %}
+
+<link href="{% static 'django_instagram/css/wall.css' %}" rel="stylesheet" type="text/css"/>
+
+{% if recent_media %}
+    <div id="django_instagram_media_wall">
+        {% for media in recent_media %}
+            <div class="django_instagram_media_wall_item">
+                <a href="{{ media.link }}" target="_blank" title="{{ media.caption.text }}">
+                    <img src="{{ media|standard_size }}"/>
+                    <span>{{ media.caption.text }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static "django_instagram/js/masonry/masonry.pkgd.min.js" %}"></script>
+    <script>
+        $.ready(function() {
+            var container = document.querySelector('#django_instagram_media_wall');
+            var masonry = new Masonry(container, {
+                itemSelector: '.django_instagram_media_wall_item'
+            });
+        });
+    </script>
+{% endif %}
