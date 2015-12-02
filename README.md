@@ -139,7 +139,7 @@ For low resolution images:
 ```html
 {% for media in recent_media %}
 ...
-<img src="{{ media|standard_size }}"/>
+<img src="{{ media|low_resolution }}"/>
 ...
 {% endfor %}
 ```
@@ -149,7 +149,7 @@ For thumbnail size:
 ```html
 {% for media in recent_media %}
 ...
-<img src="{{ media|standard_size }}"/>
+<img src="{{ media|thumbnail }}"/>
 ...
 {% endfor %}
 ```
