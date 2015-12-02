@@ -16,4 +16,6 @@ class InstagramConfiguration(models.Model):
     app_access_token = models.TextField(
         _(u'Access token'),
         help_text=_(
-            u'Click on "Get Access Token" and you will be redirected to Instagram, then follow the instructions. Remember to log in with the user that you want to show on the web page.'))
+            u'Click on "Get Access Token" and you will be redirected to \
+            Instagram, then follow the instructions. Remember to log in with \
+            the account that you want to show on the web page.'))

@@ -6,7 +6,6 @@ Created on 12/dic/2013
 
 from instagram.client import InstagramAPI
 
-from django.core.exceptions import ObjectDoesNotExist
 from django import template
 
 from django_instagram.models import InstagramConfiguration
@@ -18,19 +17,20 @@ DJANGO_INSTAGRAM_REDIRECT_URI = "http://www.emarcs.net/instagram/"
 
 
 def instagram_sign_in_with_token():
-    try:
-        token = InstagramConfiguration.objects.get(pk=1)
+    token = InstagramConfiguration.objects.first()
+
+    if token is None:
+        print("Django Instagram, configuration not found")
+        return token
+    else:
         return InstagramAPI(access_token=token.app_access_token)
-    except ObjectDoesNotExist as e:
-        print("Django Instagram, configuration not found: %s" % e)
-        return None
 
 
 def instagram_get_recent_media(count):
     api = instagram_sign_in_with_token()
 
     if api:
-        recent_media, next = api.user_recent_media(count=count)
+        recent_media, next_ = api.user_recent_media(count=count)
         return recent_media
     else:
         return None
@@ -41,8 +41,8 @@ class InstagramPopularMediaNode(template.Node):
         Template node for displaying the popular media of Instagram.
         The API doesn't need authentication, just basic access.
     """
-    def __init__(self, args):
-        self.count = args[0]
+    def __init__(self, count):
+        self.count = count
         self.api = InstagramAPI(client_id=DJANGO_INSTAGRAM_CLIENT_ID)
 
     def render(self, context):
@@ -58,7 +58,14 @@ def instagram_popular_media(parser, token):
     """
         Tag for getting data about popular media on Instagram.
     """
-    return InstagramPopularMediaNode(token.split_contents())
+    try:
+        tagname, count = token.split_contents()
+
+        return InstagramPopularMediaNode(count.split('=')[1])
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            "%r tag requires a single argument" % token.contents.split()[0]
+        )
 
 
 class InstagramRecentMediaNode(template.Node):
@@ -72,10 +79,10 @@ class InstagramRecentMediaNode(template.Node):
     """
 
     def __init__(self, count):
-        self.recent_media = instagram_get_recent_media(count)
+        self.count = count
 
     def render(self, context):
-        context['recent_media'] = self.recent_media
+        context['recent_media'] = instagram_get_recent_media(self.count)
 
         return ''
 
@@ -85,9 +92,14 @@ def instagram_recent_media(parser, token):
     """
         Tag for getting data about recent media of an user.
     """
-    limit = token.split_contents()[1]
+    try:
+        tagname, count = token.split_contents()
 
-    return InstagramRecentMediaNode(limit)
+        return InstagramRecentMediaNode(count.split('=')[1])
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            "%r tag requires a single argument" % token.contents.split()[0]
+        )
 
 
 @register.inclusion_tag('django_instagram/recent_media_box.html')
@@ -101,7 +113,7 @@ def instagram_recent_media_box(*args, **kwargs):
 
 @register.inclusion_tag('django_instagram/recent_media_wall.html')
 def instagram_recent_media_wall(*args, **kwargs):
-    recent_media = instagram_get_recent_media(count=kwargs.get('count', 8))
+    recent_media = instagram_get_recent_media(count=kwargs.get('count', 10))
 
     return {
         'recent_media': recent_media
