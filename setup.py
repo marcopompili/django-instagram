@@ -24,7 +24,7 @@ setup(
     license=str('BSD-3 License'),
     install_requires=[
         'django>=1.6',
-        'python-instagram'
+        'python-instagram-2'
     ],
     classifiers=[
         'Environment :: Web Environment',
