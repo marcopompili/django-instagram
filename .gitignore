@@ -7,5 +7,7 @@
 .settings
 .idea
 
+build
 dist
 django_instagram.egg-info
+migrations/
