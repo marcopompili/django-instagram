@@ -5,8 +5,8 @@
         <ul class="slider">
             {% for media in recent_media %}
             <li class="entry">
-                <a href="{{ media.link }}" title="{{ media.caption.text }}" target="_blank">
-                    <img src="{{ media|low_resolution }}"/>
+                <a href="{{ media.display_src }}" title="{{ media.caption }}" target="_blank">
+                    <img src="{{ media.thumbnail_src }}"/>
                 </a>
             </li>
             {% endfor %}

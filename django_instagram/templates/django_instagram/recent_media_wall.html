@@ -6,9 +6,9 @@
     <div id="django_instagram_media_wall">
         {% for media in recent_media %}
             <div class="django_instagram_media_wall_item">
-                <a href="{{ media.link }}" target="_blank" title="{{ media.caption.text }}">
-                    <img src="{{ media|standard_size }}"/>
-                    <span>{{ media.caption.text }}</span>
+                <a href="{{ media.display_src }}" target="_blank" title="{{ media.caption }}">
+                    <img src="{{ media.thumbnail_src }}"/>
+                    <span>{{ media.caption }}</span>
                 </a>
             </div>
         {% endfor %}
