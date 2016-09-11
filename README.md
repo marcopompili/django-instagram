@@ -1,7 +1,7 @@
 django-instagram
 ================
 
-A Django application that allows to use some template tags to display content
+A Django application that allows to use some template tags for displaying content
 from an Instagram public profile.
 
 Requirements
@@ -20,10 +20,14 @@ Install Django with your favourite Linux packaging system or you can use pip
 for installing python packages, if Django is not an official package for
 your distribution:
 
+```bash
+pip install django
+```
+
 Use pip to install Django Instagram:
 
 ```bash
-pip install django-instagram
+pip install django-instagram==0.2.0a1
 ```
 
 Pip should take care of the package dependencies for Django Instagram.
@@ -54,22 +58,13 @@ Them migrate the db:
 python manage.py migrate
 ```
 
-Go to the Django Instagram administration panel and click on "Get
-Access Token" button to receive your access token from Instagram.
-Then copy and paste it to the configuration field and save.
-
-Remember to be logged in with the Instagram account that you want
-to get the access token for.
-
 Usage
 -----
 
-After you are done with this, you can use the tags who need user
-access to Instagram, this tag will give you two context variables
-called: 
-  - profile: Contains the who scraped object.
-  - recent\_media: Contains the recent media, like 10 or 12 entries or so.
-  
+The `instagram_user_recent_media` brings into context two objects:
+-   profile: Contains the who scraped object.
+-   recent\_media: Contains the recent media, like 10 or 12 entries or so.
+
 You can display the data contained in recent_media list like this:
 
 ```html
