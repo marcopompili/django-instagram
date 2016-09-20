@@ -101,8 +101,10 @@ this:
 Filters
 -------
 
-As you may have noticed some filters can be used for sizing
-the pictures, here is the list of the usable fitlers:
+As you may have noticed some filters can be used for sizing the pictures.
+Make sure you have `sorl.thumbnail` in the INSTALLED_APPS to use these.
+
+Here is the list of the usable fitlers:
 
 For standard size:
 
