@@ -40,6 +40,7 @@ Add the application to INSTALLED_APPS:
 ```python
 INSTALLED_APPS = (
                   ...
+                  'sorl.thumbnail', # required for thumbnail support
                   'django_instagram',)
 ```
 
