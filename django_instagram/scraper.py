@@ -5,6 +5,7 @@ Created on 04/sep/2016
 """
 
 from lxml import html
+from requests.exceptions import ConnectionError
 import requests
 import json
 
@@ -17,9 +18,14 @@ def instagram_scrap_profile(username):
     :param username:
     :return:
     """
-    url = "https://www.instagram.com/{}/".format(username)
-    page = requests.get(url)
-    return html.fromstring(page.content)
+    try:
+        url = "https://www.instagram.com/{}/".format(username)
+        page = requests.get(url)
+        return html.fromstring(page.content)
+    except ConnectionError as e:
+        print(e)
+        r = "No response"
+
 
 
 def instagram_profile_js(username):
