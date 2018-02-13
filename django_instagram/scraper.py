@@ -4,8 +4,10 @@ Created on 04/sep/2016
 @author: Marco Pompili
 """
 
+from socket import error as SocketError
 from lxml import html
 import requests
+from requests.exceptions import ConnectionError
 import json
 
 SCRIPT_JSON_PREFIX = 18
@@ -17,9 +19,14 @@ def instagram_scrap_profile(username):
     :param username:
     :return:
     """
-    url = "https://www.instagram.com/{}/".format(username)
-    page = requests.get(url)
-    return html.fromstring(page.content)
+    try:
+        url = "https://www.instagram.com/{}/".format(username)
+        page = requests.get(url)
+        return html.fromstring(page.content)
+    except (ConnectionError, SocketError) as e:
+        return ''
+
+
 
 
 def instagram_profile_js(username):
