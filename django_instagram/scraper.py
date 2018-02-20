@@ -35,9 +35,11 @@ def instagram_profile_js(username):
     :param username:
     :return:
     """
-    tree = instagram_scrap_profile(username)
-    return tree.xpath('//script')
-
+    try:
+        tree = instagram_scrap_profile(username)
+        return tree.xpath('//script')
+    except AttributeError:
+        return ''
 
 def instagram_profile_json(username):
     """
