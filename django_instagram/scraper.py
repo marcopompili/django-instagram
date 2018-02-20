@@ -49,13 +49,14 @@ def instagram_profile_json(username):
     """
     scripts = instagram_profile_js(username)
     source = None
-
-    for script in scripts:
-        if script.text:
-            if script.text[0:SCRIPT_JSON_PREFIX] == "window._sharedData":
-                source = script.text[SCRIPT_JSON_DATA_INDEX:-1]
+    if scripts != '':
+        for script in scripts:
+            if script.text:
+                if script.text[0:SCRIPT_JSON_PREFIX] == "window._sharedData":
+                    source = script.text[SCRIPT_JSON_DATA_INDEX:-1]
 
     return source
+
 
 
 def instagram_profile_obj(username):
@@ -65,4 +66,6 @@ def instagram_profile_obj(username):
     :return:
     """
     json_data = instagram_profile_json(username)
-    return json.loads(json_data)
+    if json_data:
+        return json.loads(json_data)
+    
