@@ -4,6 +4,8 @@ Created on 12/dic/2013
 @author: Marco Pompili
 """
 
+import logging
+
 from django import template
 
 from sorl.thumbnail import get_thumbnail, delete
@@ -11,7 +13,9 @@ from sorl.thumbnail import get_thumbnail, delete
 from django_instagram import settings
 from django_instagram.scraper import instagram_profile_json, instagram_profile_obj
 
+
 register = template.Library()
+
 
 def get_profile_media(profile, page = 0):
     """
@@ -23,7 +27,7 @@ def get_profile_media(profile, page = 0):
     try:
         return profile['entry_data']['ProfilePage'][page]['user']['media']['nodes']
     except KeyError:
-        return ''
+        logging.exception("path to profile media not found")
 
 
 class InstagramUserRecentMediaNode(template.Node):
@@ -36,11 +40,12 @@ class InstagramUserRecentMediaNode(template.Node):
 
     def render(self, context):
         profile = instagram_profile_obj(username=self.username)
-        context['profile'] = profile
-        context['recent_media'] = get_profile_media(profile)
+
+        if profile:
+            context['profile'] = profile
+            context['recent_media'] = get_profile_media(profile)
 
         return ''
-
 
 
 @register.tag
@@ -59,6 +64,7 @@ def instagram_user_recent_media(parser, token):
         raise template.TemplateSyntaxError(
             "%r tag requires a single argument" % token.contents.split()[0]
         )
+
 
 @register.inclusion_tag('django_instagram/recent_media_box.html')
 def instagram_recent_media_box(*args, **kwargs):
