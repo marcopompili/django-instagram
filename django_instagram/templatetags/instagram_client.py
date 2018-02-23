@@ -20,7 +20,10 @@ def get_profile_media(profile, page = 0):
     :param page:
     :return:
     """
-    return profile['entry_data']['ProfilePage'][page]['user']['media']['nodes']
+    try:
+        return profile['entry_data']['ProfilePage'][page]['user']['media']['nodes']
+    except KeyError:
+        return ''
 
 
 class InstagramUserRecentMediaNode(template.Node):

@@ -35,9 +35,11 @@ def instagram_profile_js(username):
     :param username:
     :return:
     """
-    tree = instagram_scrap_profile(username)
-    return tree.xpath('//script')
-
+    try:
+        tree = instagram_scrap_profile(username)
+        return tree.xpath('//script')
+    except AttributeError:
+        return ''
 
 def instagram_profile_json(username):
     """
@@ -47,13 +49,15 @@ def instagram_profile_json(username):
     """
     scripts = instagram_profile_js(username)
     source = None
+    if scripts != '':
+        for script in scripts:
+            if script.text:
+                if script.text[0:SCRIPT_JSON_PREFIX] == "window._sharedData":
+                    source = script.text[SCRIPT_JSON_DATA_INDEX:-1]
 
-    for script in scripts:
-        if script.text:
-            if script.text[0:SCRIPT_JSON_PREFIX] == "window._sharedData":
-                source = script.text[SCRIPT_JSON_DATA_INDEX:-1]
+        return source
+    return ''
 
-    return source
 
 
 def instagram_profile_obj(username):
@@ -63,4 +67,8 @@ def instagram_profile_obj(username):
     :return:
     """
     json_data = instagram_profile_json(username)
-    return json.loads(json_data)
+    if json_data != '':
+        return json.loads(json_data)
+    no_data = json.dumps('')
+    return json.loads(no_data)
+    
