@@ -55,7 +55,8 @@ def instagram_profile_json(username):
                 if script.text[0:SCRIPT_JSON_PREFIX] == "window._sharedData":
                     source = script.text[SCRIPT_JSON_DATA_INDEX:-1]
 
-    return source
+        return source
+    return ''
 
 
 
@@ -66,6 +67,8 @@ def instagram_profile_obj(username):
     :return:
     """
     json_data = instagram_profile_json(username)
-    if json_data:
+    if json_data != '':
         return json.loads(json_data)
+    no_data = json.dumps('')
+    return json.loads(no_data)
     
