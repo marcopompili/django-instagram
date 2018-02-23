@@ -93,10 +93,10 @@ this:
 {% load instagram_client %}
 
 <h1>Instagram media wall</h1>
-{% instagram_recent_media_wall usename="intel" %}
+{% instagram_recent_media_wall username="intel" %}
 
 <h1>Instagram sliding box</h1>
-{% instagram_recent_media_box usename="intel" %}
+{% instagram_recent_media_box username="intel" %}
 ```
 
 Filters
