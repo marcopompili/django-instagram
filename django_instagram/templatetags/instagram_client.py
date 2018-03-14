@@ -25,7 +25,8 @@ def get_profile_media(profile, page = 0):
     :return:
     """
     try:
-        return profile['entry_data']['ProfilePage'][page]['user']['media']['nodes']
+        edges = profile['entry_data']['ProfilePage'][page]['graphql']['user']['edge_owner_to_timeline_media']['edges']
+        return [edge['node'] for edge in edges]
     except KeyError:
         logging.exception("path to profile media not found")
 
