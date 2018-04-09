@@ -83,7 +83,7 @@ You can display the data contained in recent_media list like this:
     {% instagram_user_recent_media amd %}
     {% for media in recent_media %}
         <div class="django_instagram_media_wall_item">
-            <a href="//instagram.com/p/{{ media.shortcode }}" target="_blank" title="{{ media.caption }}">
+            <a href="//instagram.com/p/{{ media.shortcode }}" target="_blank">
                 <img src="{{ media.thumbnail_src }}"/>
                 <span>{{ media.edge_media_to_caption.edges.0.node.text }}</span>
             </a>
