@@ -45,7 +45,7 @@ Add the application to INSTALLED_APPS:
 Rebuild your application database, this command depends on which
 version of Django you are using.
 
-In Django 1.9 (recommended):
+In Django 2.0 (recommended):
 
 .. code-block:: bash
 
@@ -79,20 +79,30 @@ You can display the data contained in recent_media list like this:
 
 .. code-block:: html
 
-  {% load instagram_client %}
+    <!DOCTYPE html>
 
-  {% instagram_user_recent_media intel %}
+    {% load instagram_client %}
 
-  <div id="django_recent_media_wall">
-    {% for media in recent_media %}
-      <div class="django_instagram_media_wall_item">
-        <a href="{{ media.display_src }}" target="_blank" title="{{ media.caption }}">
-          <img src="{{ media.thumbnail_src }}"/>
-          <span>{{ media.caption }}</span>
-        </a>
-      </div>
-    {% endfor %}
-  </div>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>AMD Instagram feed</title>
+    </head>
+    <h1>AMD Instagram Feed</h1>
+    <div id="django_recent_media_wall">
+        {% instagram_user_recent_media amd %}
+        {% for media in recent_media %}
+            <div class="django_instagram_media_wall_item">
+                <a href="//instagram.com/p/{{ media.shortcode }}" target="_blank">
+                    <img src="{{ media.thumbnail_src }}"/>
+                    <span>{{ media.edge_media_to_caption.edges.0.node.text }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <p>Got from instagram</p>
+    </body>
+    </html>
 
 There are also two inclusion tags that includes an example of
 how to parse data from Instagram, you can also use them like
@@ -148,6 +158,7 @@ For thumbnail size:
 --------
 Releases
 --------
+* 0.3.0 Updates to the scraping algorithm.
 * 0.2.0 New scraping algorithm, removed Python Instagram.
 * 0.1.1 Numerous bug fixes, better documentation.
 * 0.1.0 Work in progress version.

@@ -27,7 +27,7 @@ pip install django
 Use pip to install Django Instagram:
 
 ```bash
-pip install django-instagram==0.2.0a1
+pip install django-instagram
 ```
 
 Pip should take care of the package dependencies for Django Instagram.
@@ -47,7 +47,7 @@ INSTALLED_APPS = (
 Rebuild your application database, this command depends on which
 version of Django you are using.
 
-In Django 1.9 (recommended):
+In Django 2.0 (recommended):
 
 ```bash
 python manage.py makemigrations django_instagram
@@ -149,6 +149,7 @@ For thumbnail size:
 
 Releases
 --------
+*   0.3.0 Updates to the scraping algorithm.
 *   0.2.0 New scraping algorithm, removed Python Instagram.
 *   0.1.1 Numerous bug fixes, better documentation.
 *   0.1.0 Work in progress version.
