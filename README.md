@@ -69,20 +69,30 @@ The `instagram_user_recent_media` brings into context two objects:
 You can display the data contained in recent_media list like this:
 
 ```html
+<!DOCTYPE html>
+
 {% load instagram_client %}
 
-{% instagram_user_recent_media intel %}
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AMD Instagram feed</title>
+</head>
+<h1>AMD Instagram Feed</h1>
 <div id="django_recent_media_wall">
-  {% for media in recent_media %}
-    <div class="django_instagram_media_wall_item">
-      <a href="{{ media.display_src }}" target="_blank" title="{{ media.caption }}">
-        <img src="{{ media.thumbnail_src }}"/>
-        <span>{{ media.caption }}</span>
-      </a>
-    </div>
-  {% endfor %}
+    {% instagram_user_recent_media amd %}
+    {% for media in recent_media %}
+        <div class="django_instagram_media_wall_item">
+            <a href="//instagram.com/p/{{ media.shortcode }}" target="_blank" title="{{ media.caption }}">
+                <img src="{{ media.thumbnail_src }}"/>
+                <span>{{ media.edge_media_to_caption.edges.0.node.text }}</span>
+            </a>
+        </div>
+    {% endfor %}
 </div>
+<p>Got from instagram</p>
+</body>
+</html>
 ```
 
 There are also two inclusion tags that includes an example of
