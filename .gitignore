@@ -6,6 +6,7 @@
 .pydevproject
 .settings
 .idea
+venv/
 
 build
 dist
