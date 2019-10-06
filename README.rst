@@ -57,23 +57,14 @@ Them migrate the db:
 
   python manage.py migrate
 
-Go to the Django Instagram administration panel and click on "Get
-Access Token" button to receive your access token from Instagram.
-Then copy and paste it to the configuration field and save.
-
-Remember to be logged in with the Instagram account that you want
-to get the access token for.
-
 -----
 Usage
 -----
 
-After you are done with this, you can use the tags who need user
-access to Instagram, this tag will give two context variables
-called:
+The instagram_user_recent_media brings into context two objects:
 
-- profile:
-- recent_media:
+- profile: Contains the who scraped object.
+- recent_media: Contains the recent media, like 10 or 12 entries or so.
 
 You can display the data contained in recent_media list like this:
 
