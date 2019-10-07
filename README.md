@@ -78,6 +78,7 @@ You can display the data contained in recent_media list like this:
     <meta charset="UTF-8">
     <title>AMD Instagram feed</title>
 </head>
+<body>
 <h1>AMD Instagram Feed</h1>
 <div id="django_recent_media_wall">
     {% instagram_user_recent_media amd %}
