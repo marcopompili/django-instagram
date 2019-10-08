@@ -13,11 +13,17 @@ from sorl.thumbnail import get_thumbnail, delete
 from django_instagram import settings
 from django_instagram.scraper import instagram_profile_json, instagram_profile_obj
 
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 register = template.Library()
 
 
-def get_profile_media(profile, page = 0):
+def get_profile_media(profile, page=0):
     """
     Parse a generated media object
     :param profile:
@@ -28,7 +34,7 @@ def get_profile_media(profile, page = 0):
         edges = profile['entry_data']['ProfilePage'][page]['graphql']['user']['edge_owner_to_timeline_media']['edges']
         return [edge['node'] for edge in edges]
     except KeyError:
-        logging.exception("path to profile media not found")
+        logger.exception("path to profile media not found")
 
 
 class InstagramUserRecentMediaNode(template.Node):
