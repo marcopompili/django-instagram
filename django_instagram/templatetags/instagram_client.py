@@ -11,7 +11,7 @@ from django import template
 from sorl.thumbnail import get_thumbnail, delete
 
 from django_instagram import settings
-from django_instagram.scraper import instagram_profile_json, instagram_profile_obj
+from django_instagram.scraper import instagram_profile_obj
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler()
@@ -42,11 +42,21 @@ class InstagramUserRecentMediaNode(template.Node):
     Template node for showing recent media from an user.
     """
 
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, var_name):
+        self.var_name = var_name
+        self.username = template.Variable(var_name)
 
     def render(self, context):
-        profile = instagram_profile_obj(username=self.username)
+        try:
+            profile = instagram_profile_obj(self.username.resolve(context))
+        except template.base.VariableDoesNotExist:
+            logger.warning(
+                " variable name \"{}\" not found in context!"
+                " Using a raw string as input is DEPRECATED."
+                " Please use a template variable instead!".format(self.var_name)
+            )
+
+            profile = instagram_profile_obj(username=self.var_name)
 
         if profile:
             context['profile'] = profile
@@ -71,7 +81,6 @@ def instagram_user_recent_media(parser, token):
         raise template.TemplateSyntaxError(
             "%r tag requires a single argument" % token.contents.split()[0]
         )
-
 
 @register.inclusion_tag('django_instagram/recent_media_box.html')
 def instagram_recent_media_box(*args, **kwargs):
