@@ -13,11 +13,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name=str('django-instagram'),
-    version=str('0.3.0'),
+    version=str('0.3.1'),
     description=str('Instagram client for Django.'),
     long_description=README,
     author=str('Marco Pompili'),
-    author_email=str('django@emarcs.org'),
+    author_email=str('django@odd.red'),
     license=str('BSD-3 License'),
     url=str('https://github.com/marcopompili/django-instagram'),
     packages=find_packages(),
@@ -42,6 +42,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Framework :: Django',
         'Framework :: Django :: 1.6',
@@ -49,5 +50,6 @@ setup(
         'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.2',
     ],
 )
