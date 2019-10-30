@@ -164,7 +164,7 @@ For thumbnail size:
 
 Releases
 --------
-*   0.3.1 Template tag accepts context variables (not released on pypi).
+*   0.3.1 Template tag accepts context variables.
 *   0.3.0 Updates to the scraping algorithm.
 *   0.2.0 New scraping algorithm, removed Python Instagram.
 *   0.1.1 Numerous bug fixes, better documentation.

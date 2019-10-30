@@ -61,12 +61,26 @@ Them migrate the db:
 Usage
 -----
 
-The instagram_user_recent_media brings into context two objects:
+The `instagram_user_recent_media` brings into context two objects:
 
-- profile: Contains the who scraped object.
-- recent_media: Contains the recent media, like 10 or 12 entries or so.
+  - `profile`: Contains the who scraped object.
+  - `recent_media`: Contains the recent media, like 10 or 12 entries or so.
 
-You can display the data contained in recent_media list like this:
+A Django `urls.py` example using a `TemplateView` View class with a context variable called `instagram_profile_name`:
+
+.. code-block:: python
+
+    from django.contrib import admin
+    from django.urls import path
+    from django.views.generic import TemplateView
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', TemplateView.as_view(template_name='index.html', extra_context={
+            "instagram_profile_name": "amd"
+        })),
+    ]
+
+You can display the data contained in `recent_media` list like this:
 
 .. code-block:: html
 
@@ -77,12 +91,12 @@ You can display the data contained in recent_media list like this:
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>AMD Instagram feed</title>
+        <title>{{ instagram_profile_name|capfirst }} Instagram feed</title>
     </head>
     <body>
-    <h1>AMD Instagram Feed</h1>
+    <h1>{{ instagram_profile_name|capfirst }} Instagram Feed</h1>
     <div id="django_recent_media_wall">
-        {% instagram_user_recent_media amd %}
+        {% instagram_user_recent_media instagram_profile_name %}
         {% for media in recent_media %}
             <div class="django_instagram_media_wall_item">
                 <a href="//instagram.com/p/{{ media.shortcode }}" target="_blank">
@@ -150,6 +164,7 @@ For thumbnail size:
 --------
 Releases
 --------
+* 0.3.1 Template tag accepts context variables.
 * 0.3.0 Updates to the scraping algorithm.
 * 0.2.0 New scraping algorithm, removed Python Instagram.
 * 0.1.1 Numerous bug fixes, better documentation.
