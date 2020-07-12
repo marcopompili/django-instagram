@@ -7,7 +7,7 @@ from an Instagram public profile.
 Requirements
 ------------
 
-*   [Django >= 1.6](https://www.djangoproject.com/)
+*   [Django >= 1.11](https://www.djangoproject.com/)
 *   [lxml](https://pypi.python.org/pypi/lxml/3.6.4)
 *   [requests](https://pypi.python.org/pypi/requests/2.11.1)
 *   [sorl-thumbnail](https://github.com/mariocesar/sorl-thumbnail)
@@ -164,6 +164,7 @@ For thumbnail size:
 
 Releases
 --------
+*   0.3.2 Compatibility fix for Django 3.
 *   0.3.1 Template tag accepts context variables.
 *   0.3.0 Updates to the scraping algorithm.
 *   0.2.0 New scraping algorithm, removed Python Instagram.
