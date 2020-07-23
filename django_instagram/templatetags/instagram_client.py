@@ -48,7 +48,7 @@ class InstagramUserRecentMediaNode(template.Node):
 
     def render(self, context):
         try:
-            profile = instagram_profile_obj(self.username.resolve(context))
+            profile = instagram_profile_obj(self.username.resolve(context), context['request'].headers)
         except template.base.VariableDoesNotExist:
             logger.warning(
                 " variable name \"{}\" not found in context!"
@@ -56,7 +56,7 @@ class InstagramUserRecentMediaNode(template.Node):
                 " Please use a template variable instead!".format(self.var_name)
             )
 
-            profile = instagram_profile_obj(username=self.var_name)
+            profile = instagram_profile_obj(self.var_name, context['request'].headers)
 
         if profile:
             context['profile'] = profile
@@ -82,9 +82,10 @@ def instagram_user_recent_media(parser, token):
             "%r tag requires a single argument" % token.contents.split()[0]
         )
 
-@register.inclusion_tag('django_instagram/recent_media_box.html')
-def instagram_recent_media_box(*args, **kwargs):
-    profile = instagram_profile_obj(username=kwargs.get('username'))
+
+@register.inclusion_tag('django_instagram/recent_media_box.html', takes_context=True)
+def instagram_recent_media_box(context, *args, **kwargs):
+    profile = instagram_profile_obj(kwargs.get('username'), context['request'].headers)
     recent_media = get_profile_media(profile)
 
     return {
@@ -93,9 +94,9 @@ def instagram_recent_media_box(*args, **kwargs):
     }
 
 
-@register.inclusion_tag('django_instagram/recent_media_wall.html')
-def instagram_recent_media_wall(*args, **kwargs):
-    profile = instagram_profile_obj(username=kwargs.get('username'))
+@register.inclusion_tag('django_instagram/recent_media_wall.html', takes_context=True)
+def instagram_recent_media_wall(context, *args, **kwargs):
+    profile = instagram_profile_obj(kwargs.get('username'), context['request'].headers)
     recent_media = get_profile_media(profile)
 
     return {
