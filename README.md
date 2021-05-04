@@ -1,6 +1,8 @@
 django-instagram
 ================
 
+> ⚠️ This project should be considered abandoned. To embed IG content you should go through [Instagram official API](https://developers.facebook.com/docs/instagram-basic-display-api).
+
 A Django application that allows to use some template tags for displaying content
 from an Instagram public profile.
 
